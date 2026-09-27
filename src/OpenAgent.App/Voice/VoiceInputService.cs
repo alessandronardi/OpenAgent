@@ -40,10 +40,10 @@ public sealed class VoiceInputService : IDisposable
         }
         else
         {
-            // Default model location in models/ggml-tiny.bin
+            // Default model location in models/ggml-small.bin
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string localModelsDir = Path.Combine(Directory.GetCurrentDirectory(), "models", "ggml-tiny.bin");
-            string appModelsDir = Path.Combine(baseDir, "models", "ggml-tiny.bin");
+            string localModelsDir = Path.Combine(Directory.GetCurrentDirectory(), "models", "ggml-small.bin");
+            string appModelsDir = Path.Combine(baseDir, "models", "ggml-small.bin");
 
             _modelPath = File.Exists(localModelsDir) ? localModelsDir : appModelsDir;
         }
@@ -63,14 +63,14 @@ public sealed class VoiceInputService : IDisposable
 
         try
         {
-            StatusChanged?.Invoke("Scaricamento modello Whisper locale (75 MB)...");
+            StatusChanged?.Invoke("Scaricamento modello Whisper locale Small (466 MB)...");
             string? dir = Path.GetDirectoryName(_modelPath);
             if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
             }
 
-            await using var modelStream = await WhisperGgmlDownloader.Default.GetGgmlModelAsync(GgmlType.Tiny);
+            await using var modelStream = await WhisperGgmlDownloader.Default.GetGgmlModelAsync(GgmlType.Small);
             await using var fileStream = File.OpenWrite(_modelPath);
             await modelStream.CopyToAsync(fileStream);
 

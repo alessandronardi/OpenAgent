@@ -1417,7 +1417,7 @@ public partial class MainWindow : Window
         {
             if (!_voiceInputService.IsModelAvailable())
             {
-                SetSpeechText("Scaricamento del modello Whisper locale (75 MB)...");
+                SetSpeechText("Scaricamento del modello Whisper locale Small (466 MB)...");
                 bool ok = await _voiceInputService.EnsureModelAvailableAsync();
                 if (!ok) return;
             }

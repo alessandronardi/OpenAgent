@@ -21,12 +21,12 @@ function Assert-Condition($condition, [string]$testName) {
 }
 
 # 1. Model existence check
-$modelFile = Resolve-Path "models/ggml-tiny.bin" -ErrorAction SilentlyContinue
-Assert-Condition ($modelFile -ne $null -and (Test-Path $modelFile)) "Whisper model file 'models/ggml-tiny.bin' exists on disk"
+$modelFile = Resolve-Path "models/ggml-small.bin" -ErrorAction SilentlyContinue
+Assert-Condition ($modelFile -ne $null -and (Test-Path $modelFile)) "Whisper model file 'models/ggml-small.bin' exists on disk"
 
 if ($modelFile) {
     $size = (Get-Item $modelFile).Length
-    Assert-Condition ($size -gt 70000000) "Whisper model file size is valid ($([Math]::Round($size / 1MB, 1)) MB)"
+    Assert-Condition ($size -gt 400000000) "Whisper model file size is valid ($([Math]::Round($size / 1MB, 1)) MB)"
 }
 
 # 2. Verify assembly dependencies

@@ -66,7 +66,7 @@ foreach ($suite in $suites) {
     $results += [PSCustomObject]@{
         Suite    = $suite.Name
         Script   = $suite.Script
-        ExitCode = $p.ExitCode
+        ExitCode = $exitCode
         Passed   = $success
         Duration = "$([math]::Round($elapsed.TotalSeconds, 1))s"
     }

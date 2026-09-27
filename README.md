@@ -45,8 +45,8 @@ L'applicazione esegue l'inferenza direttamente sul computer tramite `llama.cpp` 
 
 Il modulo vocale si basa sulle librerie **Whisper.net** e **NAudio**:
 * **Elaborazione locale:** l'audio catturato dal microfono (16 kHz, 16 bit mono) viene elaborato in memoria dalla libreria nativa C++ `whisper.dll`. Nessun dato audio lascia il computer.
-* **Modello compatto (`ggml-tiny.bin`):** modello da circa 75 MB ottimizzato per italiano e inglese, caricato in memoria all'avvio per ridurre al minimo i tempi di risposta.
-* **Download automatico:** se il modello non è presente nella cartella `models/`, l'applicazione propone di scaricarlo al primo utilizzo del microfono.
+* **Modello ad alta precisione (`ggml-small.bin`):** modello da circa 466 MB ottimizzato per una dettatura naturale e precisa in lingua italiana e inglese, caricato in memoria all'avvio per ridurre al minimo i tempi di risposta.
+* **Download automatico:** se il modello non è presente nella cartella `models/`, l'applicazione propone di scaricarlo automaticamente al primo utilizzo del microfono.
 
 ---
 
@@ -123,7 +123,7 @@ OPENAGENT/
 │   ├── OpenAgent.Tools/               # Strumenti operativi: file system, ricerca web, memoria
 │   └── OpenAgent.Data/                # Database SQLite (audit log, memoria, impostazioni) e profiler hardware
 │
-├── models/                            # Pesi quantizzati GGUF e modello Whisper (ggml-tiny.bin)
+├── models/                            # Pesi quantizzati GGUF e modello Whisper (ggml-small.bin)
 ├── runtime/llama/                     # Binari di inferenza llama.cpp con accelerazione Vulkan/CPU
 ├── runtimes/win-x64/                  # Librerie native C++ (whisper.dll, runtimes SQLite)
 ├── docs/                              # Documentazione tecnica, piano architetturale e roadmap

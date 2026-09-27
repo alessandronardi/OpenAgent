@@ -43,7 +43,7 @@ pwsh -File tests/test_sprint5.ps1
 | **`test_sprint5.ps1`** | **Sprint 5 — Memory & Settings** | Persistenza impostazioni su SQLite (`SqliteUserSettingsRepository`), memoria esplicita a lungo termine (`IUserMemoryRepository`), tool di memorizzazione/richiamo (`remember_user_preference`, `recall_user_memory`), iniezione dinamica nel system prompt, Windows Autostart e verifica pacchetto release. |
 | **`test_hardware_profiler.ps1`** | **Hardware Profiler** | Rilevamento automatico specifiche hardware (`HardwareDetector`: CPU, core, RAM, GPU) e auto-tuning euristico dei parametri ottimali (`HardwareProfiler`). |
 | **`test_gemini_cloud_integration.ps1`** | **Cloud Integration (Gemini)** | Integrazione ibrida Cloud (`GeminiClient`: 3.8 Flash + 3.5 Flash-Lite), fallback resiliente, rilevamento complessità prompt (`ModelTaskRouter`) ed escalation su 2 errori locali con consenso privacy. |
-| **`test_voice_service.ps1`** | **Voce & Whisper STT** | Verifica del motore vocale locale Whisper C++ (`Whisper.net`), modello compatto `ggml-tiny.bin` e cattura audio `NAudio`. |
+| **`test_voice_service.ps1`** | **Voce & Whisper STT** | Verifica del motore vocale locale Whisper C++ (`Whisper.net`), modello `ggml-small.bin` ad alta precisione e cattura audio `NAudio`. |
 
 ---
 

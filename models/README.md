@@ -26,6 +26,7 @@ I modelli predefiniti utilizzati dai profili di OpenAgent possono essere scarica
 
 ### 2. Modello di Trascrizione Vocale (Whisper STT)
 
-* **Nome File Atteso:** `ggml-tiny.bin` (~74 MB)
-* **Download Automatico:** Al primo avvio o all'uso del microfono, OpenAgent verifica la presenza del file e può scaricarlo automaticamente dalla repository ufficiale Whisper GGML.
-* **Download Manuale:** Scaricabile direttamente da [HuggingFace - ggerganov/whisper.cpp](https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.bin).
+* **Nome File Atteso:** `ggml-small.bin` (~466 MB)
+* **Caratteristiche:** Modello multilingua ad alta precisione (244M parametri), ideale per la trascrizione e dettatura vocale fluida in lingua italiana senza le allucinazioni o omissioni tipiche del modello compatto `tiny`.
+* **Download Automatico:** Al primo avvio o all'uso del microfono (`Ctrl+Shift+V` o icona microfono), OpenAgent verifica la presenza del file e lo scarica automaticamente dalla repository ufficiale Whisper GGML se assente.
+* **Download Manuale:** Scaricabile direttamente da [HuggingFace - ggerganov/whisper.cpp](https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.bin) e da posizionare in questa cartella (`models/ggml-small.bin`).
