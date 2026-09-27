@@ -1,152 +1,152 @@
-# 👻 OpenAgent — Assistente Desktop AI Locale & Ibrido
+# 🐙 OpenAgent — Assistente desktop locale e ibrido
 
-Benvenuto in **OpenAgent**, il tuo assistente desktop per Windows intelligente, discreto, reattivo e orientato alla **massima privacy**.  
-OpenAgent combina la riservatezza e l'immediatezza dell'inferenza **100% locale** (tramite `llama.cpp` e modelli Whisper STT) con la flessibilità del **routing intelligente multi-modello** e dell'**escalation opzionale su Cloud (Google Gemini)** per i compiti più complessi.
+**OpenAgent** è un assistente desktop per Windows progettato per funzionare in locale, garantendo privacy, velocità e controllo sui propri dati.
 
----
-
-## 🌟 Caratteristiche Principali
-
-* 🔒 **Architettura Privacy-First:** Di default, ogni calcolo, testo e file risiede esclusivamente sul tuo computer. Nessun dato viene trasmesso a server esterni senza il tuo consenso preventivo.
-* 🎙️ **Dettatura Vocale Offline (Whisper STT):** Parla direttamente con l'assistente! Trascrizione vocale locale in tempo reale con motore nativo C++ Whisper e modello compatto integrato (nessun streaming audio cloud).
-* 🧠 **Routing Intelligente dei Modelli (ModelTaskRouter):** Assegna automaticamente o manualmente la richiesta al modello più efficace per il tipo di compito (file system, comandi desktop, ricerca web, sintesi o logica).
-* ☁️ **Cloud Routing & Escalation Ibrida (Google Gemini):** Integrazione nativa con **Gemini 3.8 Flash** (1 milione di token di contesto) per compiti ad alta complessità e architettura software, con fallback resiliente su **Gemini 3.5 Flash-Lite** e policy di escalation automatica dopo 2 errori locali.
-* ⚡ **Hardware Profiler & Auto-Tune:** Rileva all'avvio la CPU, i core fisici/logici, la RAM e il supporto Vulkan del PC, calibrando in automatico thread, contesti e timeout.
-* 🛡️ **Zero Trust Sandbox & Allowlist:** Nessuna operazione di modifica o cancellazione file avviene senza autorizzazione grafica esplicita. Le cartelle di sistema Windows sono protette a livello di kernel.
-* 🎨 **Avatar Retro Pixel-Art & Click-Through:** Una presenza discreta sullo schermo con animazioni (respiro idle, battito delle palpebre, outfit dinamici per i tool) e modalità *Click-Through* per non intralciare il lavoro quotidiano.
+L'applicazione esegue l'inferenza direttamente sul computer tramite `llama.cpp` (accelerazione Vulkan e CPU) e integra la trascrizione vocale offline con Whisper. Per compiti particolarmente complessi o testi molto lunghi, supporta un sistema di routing opzionale verso modelli cloud (Google Gemini), sempre con richiesta preventiva di autorizzazione.
 
 ---
 
-## 🚀 Come Avviarlo
+## Caratteristiche principali
 
-1. Fai doppio clic sul file **`OpenAgent.exe`** (presente nella cartella principale).
-2. L'avatar pixel-art comparirà nell'angolo in basso a destra dello schermo, insieme all'icona nella barra delle applicazioni / tray vicino all'orologio di Windows.
-3. Quando il pallino accanto al messaggio diventa verde (**"In ascolto"**), OpenAgent è pronto ad assisterti.
+* 🔒 **Privacy dei dati:** l'elaborazione di testi, file e comandi avviene in locale. Nessuna informazione viene inviata all'esterno senza consenso esplicito.
+* 🎙️ **Dettatura vocale offline (Whisper):** trascrizione del parlato in tempo reale tramite la libreria nativa C++ `whisper.dll` e modello locale compatto, senza streaming audio verso server remoti.
+* 🧠 **Routing dei modelli (ModelTaskRouter):** selezione automatica o manuale del modello più adatto al tipo di richiesta (gestione file, comandi di sistema, ricerca web, sintesi o logica).
+* ☁️ **Supporto cloud opzionale (Google Gemini):** collegamento con Gemini 3.8 Flash (finestra di contesto da 1 milione di token) per refactoring, architettura software o compiti complessi, con fallback su Gemini 3.5 Flash-Lite e possibilità di escalation automatica dopo due tentativi locali falliti.
+* ⚡ **Rilevamento hardware e calibrazione automatica:** all'avvio il profiler analizza CPU, core logici e fisici, RAM disponibile e supporto Vulkan, impostando thread, contesto e timeout ottimali.
+* 🛡️ **Sandbox e cartelle autorizzate (allowlist):** qualsiasi operazione di modifica, spostamento o cancellazione di file richiede conferma grafica. Le cartelle di sistema critiche di Windows sono sempre protette.
+* 🎨 **Avatar pixel-art e modalità trasparente (click-through):** presenza discreta sullo schermo con animazioni reattive (respiro, battito delle palpebre, accessori dinamici in base allo strumento attivo) e modalità click-through per continuare a usare le finestre sottostanti.
 
 ---
 
-## 💬 Modalità di Interazione e Scorciatoie Rapide
+## Come avviarlo
 
-| Azione | Scorciatoia / Controllo | Descrizione |
+1. Fai doppio clic sul file `OpenAgent.exe` nella cartella del programma.
+2. Sullo schermo apparirà il polpo in pixel-art (in basso a destra) e l'icona corrispondente nell'area di notifica di Windows (vicino all'orologio).
+3. Quando l'indicatore di stato diventa verde (**In ascolto**), OpenAgent è pronto a ricevere richieste.
+
+---
+
+## Modalità di interazione e scorciatoie
+
+| Azione | Scorciatoia / controllo | Descrizione |
 | :--- | :--- | :--- |
-| **Mostra / Nascondi Chat** | **`Ctrl + Spazio`** *(oppure `Alt + Spazio`)* | Fa apparire istantaneamente la barra di digitazione da qualsiasi programma o finestra. |
-| **Input Vocale / Dettatura** | **`Ctrl + Shift + V`** *(o pulsante 🎙️)* | Avvia/arresta la registrazione vocale; la trascrizione locale appare direttamente nel prompt. |
-| **Invia Richiesta** | **`Invio`** *(o freccia ➔)* | Invia la richiesta all'agente ed avvia il ciclo di analisi e inferenza. |
-| **Interrompi Operazione** | **`Esc`** *(o pulsante ⏹ rosso)* | Blocca immediatamente l'esecuzione dell'agente o cancella la registrazione in corso. |
-| **Drag & Drop File/Cartelle** | *Trascina sul fumetto* | Rilascia file o cartelle sull'overlay dell'avatar per predisporre l'analisi automatica. |
-| **Sposta l'Avatar** | *Trascina con tasto sinistro* | Tieni premuto il mouse sulla mascotte per posizionarla dove preferisci sul desktop. |
-| **Modalità Click-Through** | *Icona Lucchetto 🔓/🔒* | Permette ai clic del mouse di passare attraverso la finestra, utile per tenerla sempre visibile. |
-| **Cambio Modello Rapido** | *Clic sul badge profilo* | Clicca su `· Modello Locale` nell'intestazione per visualizzare e alternare al volo i profili. |
+| **Mostra / nascondi chat** | `Ctrl + Spazio` *(o `Alt + Spazio`)* | Apre la barra di digitazione da qualsiasi finestra attiva. |
+| **Dettatura vocale** | `Ctrl + Shift + V` *(o icona 🎙️)* | Avvia o ferma la registrazione audio; il testo trascritto viene inserito nel prompt. |
+| **Invia richiesta** | `Invio` *(o freccia ➔)* | Avvia l'elaborazione della richiesta. |
+| **Interrompi operazione** | `Esc` *(o pulsante ⏹ rosso)* | Ferma l'operazione in corso o annulla la registrazione vocale. |
+| **Trascina file o cartelle** | Trascina sul fumetto | Predispone la lettura o l'analisi della cartella o del file rilasciato. |
+| **Sposta il polpo** | Trascina con il tasto sinistro | Permette di riposizionare l'avatar sullo schermo. |
+| **Modalità click-through** | Icona lucchetto 🔓/🔒 | Rende la finestra trasparente ai clic del mouse, mantenendola visibile sopra le altre app. |
+| **Cambio profilo modello** | Clic sul badge del modello | Mostra e permette di alternare al volo i profili disponibili. |
 
 ---
 
-## 🎙️ Funzionalità Vocale (Speech-to-Text Locale)
+## Funzionalità vocale (speech-to-text locale)
 
-OpenAgent include un sottosistema vocale completamente integrato basato su **Whisper.net** e **NAudio**:
-* **100% Offline & Privato:** L'audio catturato dal microfono (16 kHz, 16-bit mono) viene elaborato direttamente in memoria dalla libreria nativa C++ `whisper.dll`. Nessun pacchetto audio esce dalla macchina.
-* **Modello Integrato (`ggml-tiny.bin`):** Modello compatto (~75 MB) ottimizzato per lingua italiana ed inglese, pre-caricato all'avvio per tempi di risposta inferiori a un secondo.
-* **Auto-Recovery:** Se il file del modello non è presente, OpenAgent può scaricarlo automaticamente e predisporre le librerie native senza configurazione manuale.
+Il modulo vocale si basa sulle librerie **Whisper.net** e **NAudio**:
+* **Elaborazione locale:** l'audio catturato dal microfono (16 kHz, 16 bit mono) viene elaborato in memoria dalla libreria nativa C++ `whisper.dll`. Nessun dato audio lascia il computer.
+* **Modello compatto (`ggml-tiny.bin`):** modello da circa 75 MB ottimizzato per italiano e inglese, caricato in memoria all'avvio per ridurre al minimo i tempi di risposta.
+* **Download automatico:** se il modello non è presente nella cartella `models/`, l'applicazione propone di scaricarlo al primo utilizzo del microfono.
 
 ---
 
-## 🧠 Modelli Supportati & Routing Intelligente
+## Modelli supportati e routing
 
-OpenAgent supporta un'ampia gamma di modelli locali GGUF e cloud:
+OpenAgent supporta modelli locali in formato GGUF e modelli cloud tramite API:
 
-### 1. Modelli Locali (In-Memory tramite `llama.cpp` Vulkan/CPU)
+### 1. Modelli locali (`llama.cpp` con accelerazione Vulkan o CPU)
 
-| Profilo | Modello | RAM Richiesta | Velocità Indicativa | Specializzazione Primaria |
+| Profilo | Modello consigliato | RAM indicativa | Velocità | Ambito principale |
 | :--- | :--- | :--- | :--- | :--- |
-| **Desktop & Tools** | `Qwen2.5-Coder 1.5B` | ~1.4 GB | ~23.5 tok/s *(Ultra-rapido)* | Chiamata accurata dei tool, file system, percorsi Windows e script. |
-| **Web & Reasoning** | `Qwen2.5 3B Instruct` | ~2.6 - 3.3 GB | ~12.2 tok/s *(Ponderato)* | Navigazione web, estrazione testi da URL, sintesi contesti lunghi. |
-| **Logica & Sintesi** | `Gemma-2 2B Instruct` | ~1.6 - 2.1 GB | ~18.0 tok/s *(Bilanciato)* | Redazione fluida, correzione bozze, sintesi e logica concettuale. |
-| **Generale / Batteria** | `Spark-X 2.5 1.7B` | ~1.2 - 1.9 GB | ~20.0 tok/s *(Leggero)* | Conversazioni quotidiane, promemoria, impatto minimo sulla batteria. |
-| **Personalizzato** | *File GGUF a scelta* | Dipende dai pesi | Variabile | Possibilità di selezionare qualsiasi modello compatibile `llama.cpp`. |
+| **Desktop e strumenti** | `qwen2.5-coder-1.5b-instruct-q4_k_m.gguf` | ~1,4 GB | ~23,5 tok/s | Chiamate ai tool, comandi di sistema, percorsi Windows e script. |
+| **Web e sintesi** | `qwen2.5-3b-instruct-q4_k_m.gguf` | ~2,6 - 3,3 GB | ~12,2 tok/s | Ricerche online, lettura di URL e sintesi di testi lunghi. |
+| **Logica e scrittura** | `gemma-2-2b-it-q4_k_m.gguf` | ~1,6 - 2,1 GB | ~18,0 tok/s | Redazione testi, riassunti, logica concettuale ed efficienza energetica. |
+| **Generale / batteria** | `Spark-X2.5-1.7B-Q4_K_M.gguf` | ~1,2 - 1,9 GB | ~20,0 tok/s | Conversazione generica e compiti quotidiani a basso impatto. |
+| **Personalizzato** | Qualsiasi file `.gguf` | Dipende dai pesi | Variabile | Possibilità di caricare qualsiasi modello compatibile con `llama.cpp`. |
 
-### 2. Modello Cloud Ibrido (Google Gemini)
+### 2. Modelli cloud (Google Gemini)
 
-* **Gemini 3.8 Flash (Primario):** Contesto enorme fino a **1 milione di token**, ideale per analisi di interi progetti, refactoring architetturale (CQRS, thread-safety, dependency injection) e compiti multi-step complessi.
-* **Gemini 3.5 Flash-Lite (Fallback):** Entra in funzione automaticamente in caso di rate limit (HTTP 429) o sovraccarico temporaneo di rete.
+* **Gemini 3.8 Flash (primario):** finestra di contesto fino a 1 milione di token, utile per analisi di interi repository, architetture software complesse e richieste ad alto numero di passaggi.
+* **Gemini 3.5 Flash-Lite (fallback):** subentra automaticamente in caso di errori di quota o congestione temporanea della rete.
 
-### 3. ModelTaskRouter Euristico
+### 3. Routing automatico (ModelTaskRouter)
 
-Il motore interno `ModelTaskRouter` analizza costantemente i prompt dell'utente classificandoli in domini:
-* 📂 **Desktop & Tool Calling:** Attiva il profilo Coder 1.5B per la massima precisione su file e cartelle.
-* 🌐 **Web Research:** Attiva Qwen 3B quando rileva URL o richieste di ricerca online.
-* 📝 **Text Reasoning & Synthesis:** Attiva Gemma-2 2B per traduzioni, saggi e riassunti.
-* ⚡ **Complex Reasoning Cloud:** Rileva prompt lunghi (>750 caratteri) o richieste architetturali complesse proponendo l'uso di Gemini 3.8 Flash.
-
----
-
-## ☁️ Cloud Routing & Policy di Privacy
-
-La connessione al Cloud è strettamente **opzionale** e conforme al principio di sovranità dei dati:
-1. **Consenso Preventivo:** Anche se configurato con la chiave API, OpenAgent mostrerà sempre una richiesta di autorizzazione a schermo prima di inviare dati a Gemini.
-2. **Escalation su 2 Errori:** Se il modello locale non riesce a formulare una risposta valida o incontra eccezioni per 2 passaggi consecutivi, l'assistente suggerirà automaticamente:  
-   *"Il modello locale ha riscontrato un errore per 2 passaggi consecutivi. Vuoi passare a Google Gemini 3.8 Flash nel Cloud per completare la richiesta?"*
-3. **Archiviazione Sicura:** La chiave API viene salvata unicamente nel database locale SQLite del dispositivo (`data/openagent_data.db`).
+Il modulo interno analizza il testo della richiesta e suggerisce il modello più idoneo:
+* **Strumenti desktop:** attiva Qwen2.5-Coder per operazioni su file, directory o codice.
+* **Ricerche web:** attiva Qwen 3B in presenza di URL o query di navigazione.
+* **Sintesi e testi:** attiva Gemma-2 2B per traduzioni, saggi ed elaborazioni testuali.
+* **Compiti complessi:** rileva prompt sopra i 750 caratteri o richieste architetturali, proponendo l'uso di Gemini nel cloud.
 
 ---
 
-## ⚙️ Pannello Impostazioni
+## Integrazione cloud e privacy
 
-Apri le impostazioni cliccando sull'icona dell'ingranaggio (**⚙️**) o dal menu della System Tray:
-
-* **Modello & Hardware:** Seleziona il profilo attivo, consulta l'occupazione RAM in tempo reale, configura thread CPU, contesto e timeout, oppure applica con un clic le impostazioni raccomandate dal profiler hardware.
-* **Cartelle Autorizzate (Allowlist):** Gestisci in quali directory OpenAgent è autorizzato ad operare (di default: *Documenti*, *Download*, *Desktop* e cartella di lavoro). I percorsi critici di Windows sono categoricamente inaccessibili.
-* **Memoria Agente (`user_memory`):** Consulta, inserisci, modifica o cancella le informazioni e preferenze persistenti che l'agente carica all'avvio (es. stile di risposta, percorsi di progetto preferiti).
-* **Cloud (Gemini):** Inserisci la tua chiave API di Google AI Studio (disponibile gratuitamente), verifica la connettività in tempo reale con il pulsante *⚡ Verifica Chiave*, e configura le policy di escalation e routing automatico.
+L'uso del cloud è facoltativo e governato da regole trasparenti:
+1. **Consenso esplicito:** prima di qualsiasi chiamata alle API di Gemini, l'applicazione mostra una richiesta di conferma a schermo.
+2. **Escalation su errore:** se il modello locale restituisce un errore per due volte consecutive, l'assistente chiede all'utente se desidera completare l'operazione tramite cloud.
+3. **Salvataggio locale della chiave:** la chiave API viene custodita esclusivamente nel database SQLite locale (`data/openagent_data.db`).
 
 ---
 
-## 🔒 Uscita dall'Applicazione
+## Pannello impostazioni
 
-1. Fai clic destro sull'icona del fantasmino nell'area notifiche di Windows (vicino all'orologio).
-2. Seleziona **"Esci"**.
+Le impostazioni si aprono cliccando sull'icona dell'ingranaggio (**⚙️**) o dal menu dell'area di notifica:
+
+* **Modello e hardware:** selezione del profilo locale, monitoraggio della RAM occupata, configurazione di thread, contesto e timeout, con possibilità di applicare i valori consigliati dal profiler hardware.
+* **Cartelle autorizzate (allowlist):** elenco delle directory in cui l'agente può leggere e operare (di default: *Documenti*, *Download*, *Desktop* e cartella del progetto). I percorsi di sistema Windows rimangono bloccati.
+* **Memoria dell'agente (`user_memory`):** visualizzazione e modifica delle preferenze salvate (es. stile delle risposte o percorsi abituali) che vengono iniettate all'avvio di ogni sessione.
+* **Cloud (Gemini):** inserimento della chiave API (ottenibile su Google AI Studio), verifica della connessione con misura della latenza e gestione delle regole di escalation.
 
 ---
 
-## 📁 Struttura del Repository per Sviluppatori
+## Chiusura dell'applicazione
 
-La soluzione è strutturata in progetti C# .NET 8 puliti e disaccoppiati:
+1. Fai clic destro sull'icona del polpo nell'area di notifica di Windows (in basso a destra, accanto all'orologio).
+2. Seleziona **Esci**.
+
+---
+
+## Struttura del repository
+
+Il progetto è suddiviso in moduli .NET 8 puliti e disaccoppiati:
 
 ```
 OPENAGENT/
-├── OpenAgent.exe                      # Binario eseguibile standalone pronto all'avvio
-├── OpenAgent.sln                      # Soluzione Microsoft Visual Studio / .NET 8
-├── build_release.ps1                  # Script di compilazione, packaging e creazione ZIP
+├── OpenAgent.exe                      # Eseguibile principale pronto all'avvio
+├── OpenAgent.sln                      # Soluzione di Visual Studio / .NET 8
+├── build_release.ps1                  # Script per compilazione, packaging e archivio ZIP
 │
 ├── src/
-│   ├── OpenAgent.App/                 # Shell grafica WPF (Avatar pixel-art, Speech Bubble, VoiceInputService, Tray)
-│   ├── OpenAgent.Agent/               # Controller multi-step, StateMachine, ModelTaskRouter, Security Sandbox
-│   ├── OpenAgent.Model/               # Integrazione llama-server (Win32 Job Objects), LlamaCppClient e GeminiClient
-│   ├── OpenAgent.Tools/               # Tool sandboxati: FileSystem, Web Search/Fetch, Memory Management
-│   └── OpenAgent.Data/                # Repository SQLite (Audit trail, User Memory, Settings) & HardwareProfiler
+│   ├── OpenAgent.App/                 # Interfaccia grafica WPF (avatar polpo, messaggi, voce Whisper, tray)
+│   ├── OpenAgent.Agent/               # Controller multi-step, macchina a stati, router modelli e sandbox
+│   ├── OpenAgent.Model/               # Gestione del processo llama-server, client locale e client Gemini
+│   ├── OpenAgent.Tools/               # Strumenti operativi: file system, ricerca web, memoria
+│   └── OpenAgent.Data/                # Database SQLite (audit log, memoria, impostazioni) e profiler hardware
 │
-├── models/                            # Pesi quantizzati GGUF locali e modello Whisper (ggml-tiny.bin)
-├── runtime/llama/                     # Binari runtime precompilati llama.cpp con accelerazione Vulkan / CPU
-├── runtimes/win-x64/                  # Librerie native C++ (whisper.dll, ggml-whisper, SQLite native)
-├── docs/                              # Specifiche architetturali, roadmap e piani sprint
-├── tests/                             # Suite automatizzata di test PowerShell 7 per sandbox, cloud e voce
-└── dist/                              # Cartella di output delle release e pacchetti compressi
+├── models/                            # Pesi quantizzati GGUF e modello Whisper (ggml-tiny.bin)
+├── runtime/llama/                     # Binari di inferenza llama.cpp con accelerazione Vulkan/CPU
+├── runtimes/win-x64/                  # Librerie native C++ (whisper.dll, runtimes SQLite)
+├── docs/                              # Documentazione tecnica, piano architetturale e roadmap
+├── tests/                             # Test automatizzati in PowerShell 7 (sandbox, cloud, memoria, voce)
+└── dist/                              # Pacchetti di distribuzione e archivi compressi
 ```
 
-### Esecuzione della Suite di Test
+### Esecuzione dei test
 
-Tutti i test possono essere eseguiti con **PowerShell 7 (`pwsh`)**:
+I test richiedono **PowerShell 7 (`pwsh`)**:
 
 ```powershell
-# Esegui l'intera suite di test unificata (Process, Sandbox, Audit, Multi-Step, Memory, Hardware, Cloud, Voice):
+# Esecuzione completa di tutti i moduli di test:
 pwsh -File tests/run_all_tests.ps1
 
-# Esegui i test saltando l'avvio del server locale:
+# Esecuzione rapida offline (senza avviare il server locale):
 pwsh -File tests/run_all_tests.ps1 -SkipLiveServer
 
-# Esegui solo la suite di test Cloud Gemini:
+# Test del solo modulo cloud Gemini:
 pwsh -File tests/test_gemini_cloud_integration.ps1
 
-# Esegui solo la suite di test Voce / Whisper:
+# Test del solo modulo vocale Whisper:
 pwsh -File tests/test_voice_service.ps1
 ```
 
-Per maggiori approfondimenti sull'architettura e sul modello di sicurezza, consulta la cartella [`docs/`](docs/README.md).
+Per maggiori dettagli tecnici sull'architettura e sulla sicurezza, consulta la cartella [`docs/`](docs/README.md).
