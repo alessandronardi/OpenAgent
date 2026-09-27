@@ -1,0 +1,54 @@
+# ====================================================================
+# OpenAgent — .gitignore
+# ====================================================================
+
+# 1. Pesi dei Modelli & Runtime locali pesanti (GGUF, binari di inferenza)
+models/*
+!models/.gitkeep
+!models/README.md
+
+runtime/llama/*
+!runtime/llama/.gitkeep
+!runtime/llama/README.md
+
+# 2. Database locali SQLite & Log di runtime (CRITICO: Dati personali & API Key)
+data/*
+!data/.gitkeep
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+*.log
+
+# 3. Output di Compilazione, Pacchetti di Release & Distribuzione
+[Bb]in/
+[Oo]bj/
+dist/
+publish_tmp_root/
+runtimes/
+*.zip
+
+# 4. Binari compilati nella root
+*.exe
+*.dll
+
+# 5. Ambiente di Test temporaneo
+tests/temp/
+
+# 6. File di configurazione utente IDE & Sistema Operativo
+.vs/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Windows / OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/

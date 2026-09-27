@@ -1,0 +1,1071 @@
+<Window x:Class="OpenAgent.App.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Impostazioni OpenAgent"
+        Height="620" Width="640"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <DropShadowEffect x:Key="WindowShadow" BlurRadius="24" ShadowDepth="6" Direction="270" Color="#000000" Opacity="0.65"/>
+
+        <!-- Tab Button Style -->
+        <Style x:Key="TabNavButtonStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#9CA3AF"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="14,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="TabBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="0,0,0,2"
+                                BorderBrush="Transparent"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="#3B82F6"/>
+                                <Setter Property="Foreground" Value="#60A5FA"/>
+                                <Setter Property="Background" Value="#232630"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#F3F4F6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Standard Button Style -->
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2A2D3A"/>
+            <Setter Property="Foreground" Value="#E5E7EB"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#3F4354"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Primary Action Button Style -->
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2563EB"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="16,7"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern Dark ComboBox & Dropdown Styling -->
+        <PathGeometry x:Key="DownArrowGeometry">M 0 0 L 4.5 4.5 L 9 0</PathGeometry>
+
+        <!-- ComboBox ToggleButton Style -->
+        <Style x:Key="ComboBoxToggleButtonStyle" TargetType="ToggleButton">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="ClickMode" Value="Press"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="TemplateRoot"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6"
+                                SnapsToDevicePixels="True">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="32"/>
+                                </Grid.ColumnDefinitions>
+                                <Path x:Name="Arrow"
+                                      Grid.Column="1"
+                                      Data="{StaticResource DownArrowGeometry}"
+                                      Stroke="#9CA3AF"
+                                      StrokeThickness="1.5"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      StrokeLineJoin="Round"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      SnapsToDevicePixels="True"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TemplateRoot" Property="Background" Value="#282C3A"/>
+                                <Setter TargetName="TemplateRoot" Property="BorderBrush" Value="#4B5563"/>
+                                <Setter TargetName="Arrow" Property="Stroke" Value="#F3F4F6"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="TemplateRoot" Property="Background" Value="#232734"/>
+                                <Setter TargetName="TemplateRoot" Property="BorderBrush" Value="#3B82F6"/>
+                                <Setter TargetName="Arrow" Property="Stroke" Value="#60A5FA"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="TemplateRoot" Property="Background" Value="#181A22"/>
+                                <Setter TargetName="TemplateRoot" Property="BorderBrush" Value="#282A35"/>
+                                <Setter TargetName="Arrow" Property="Stroke" Value="#4B5563"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ComboBoxItem Dark Style -->
+        <Style x:Key="DarkComboBoxItemStyle" TargetType="ComboBoxItem">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#E5E7EB"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="ItemBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="Transparent"
+                                BorderThickness="1"
+                                CornerRadius="5"
+                                Margin="2,1"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#2D3243"/>
+                                <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#3F465C"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#2563EB"/>
+                                <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#3B82F6"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#1D4ED8"/>
+                                <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#60A5FA"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="#6B7280"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource DarkComboBoxItemStyle}"/>
+
+        <!-- Default ComboBox Dark Style -->
+        <Style TargetType="ComboBox">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+            <Setter Property="Foreground" Value="#F3F4F6"/>
+            <Setter Property="Background" Value="#232630"/>
+            <Setter Property="BorderBrush" Value="#3B4052"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="10,7"/>
+            <Setter Property="MaxDropDownHeight" Value="260"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource DarkComboBoxItemStyle}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="32"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ToggleButton x:Name="ToggleButton"
+                                          Grid.ColumnSpan="2"
+                                          Style="{StaticResource ComboBoxToggleButtonStyle}"
+                                          Background="{TemplateBinding Background}"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}"
+                                          Focusable="False"
+                                          IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          ClickMode="Press"/>
+
+                            <ContentPresenter x:Name="ContentSite"
+                                              Grid.Column="0"
+                                              IsHitTestVisible="False"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                              Margin="10,7,4,7"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Left">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="#F3F4F6"/>
+                                        <Setter Property="FontSize" Value="12"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+
+                            <Popup x:Name="PART_Popup"
+                                   Grid.ColumnSpan="2"
+                                   Placement="Bottom"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   PopupAnimation="Fade"
+                                   VerticalOffset="4">
+                                <Border x:Name="DropDownBorder"
+                                        Background="#1A1C24"
+                                        BorderBrush="#3B4052"
+                                        BorderThickness="1"
+                                        CornerRadius="8"
+                                        MinWidth="{Binding Path=ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                        MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                        SnapsToDevicePixels="True"
+                                        Padding="4,4">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="18" ShadowDepth="5" Direction="270" Color="#000000" Opacity="0.7"/>
+                                    </Border.Effect>
+                                    <ScrollViewer SnapsToDevicePixels="True"
+                                                  HorizontalScrollBarVisibility="Disabled"
+                                                  VerticalScrollBarVisibility="Auto"
+                                                  CanContentScroll="True">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="False">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="40"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="#6B7280"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Dark TextBox Style -->
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#232630"/>
+            <Setter Property="Foreground" Value="#E5E7EB"/>
+            <Setter Property="BorderBrush" Value="#3B4052"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,5"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="CaretBrush" Value="#60A5FA"/>
+            <Setter Property="SelectionBrush" Value="#2563EB"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6"
+                                SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Focusable="False"
+                                          HorizontalScrollBarVisibility="Hidden"
+                                          VerticalScrollBarVisibility="Hidden"
+                                          Padding="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#4B5563"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#3B82F6"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="#181A22"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#282A35"/>
+                                <Setter Property="Foreground" Value="#6B7280"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Dark ListBoxItem Style -->
+        <Style TargetType="ListBoxItem">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="ItemBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="Transparent"
+                                BorderThickness="1"
+                                CornerRadius="6"
+                                Margin="2,2"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#252936"/>
+                                <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#3B4052"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#1E2A42"/>
+                                <Setter TargetName="ItemBorder" Property="BorderBrush" Value="#3B82F6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- Main Container Card -->
+    <Border Background="#16171D"
+            BorderBrush="#2E3240"
+            BorderThickness="1"
+            CornerRadius="12"
+            Margin="14"
+            Effect="{StaticResource WindowShadow}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <!-- Title bar -->
+                <RowDefinition Height="Auto"/>
+                <!-- Tab Navigation -->
+                <RowDefinition Height="Auto"/>
+                <!-- Tab Content Area -->
+                <RowDefinition Height="*"/>
+                <!-- Bottom Action Bar -->
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- 1. TITLE BAR -->
+            <Border Grid.Row="0"
+                    Background="#1E2029"
+                    CornerRadius="11,11,0,0"
+                    Padding="16,12"
+                    MouseLeftButtonDown="OnTitleBarMouseLeftButtonDown">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="⚙️" FontSize="15" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Impostazioni OpenAgent" FontSize="14" FontWeight="Bold" Foreground="#F3F4F6" VerticalAlignment="Center"/>
+                        <TextBlock Text="v1.0" FontSize="11" Foreground="#6B7280" Margin="8,2,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <Button Grid.Column="1"
+                            Click="OnCloseClicked"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="#9CA3AF"
+                            FontSize="13"
+                            Cursor="Hand"
+                            Padding="6,2">
+                        <TextBlock Text="✕"/>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!-- 2. TAB NAVIGATION BAR -->
+            <Border Grid.Row="1" Background="#1B1D25" BorderBrush="#2A2D3A" BorderThickness="0,0,0,1">
+                <StackPanel Orientation="Horizontal" Margin="12,0">
+                    <RadioButton x:Name="TabBtnGeneral"
+                                 GroupName="SettingsNavTabs"
+                                 Content="Modello &amp; Hardware"
+                                 Style="{StaticResource TabNavButtonStyle}"
+                                 IsChecked="True"
+                                 Checked="OnTabSelectionChanged"
+                                 Click="OnTabSelectionChanged"/>
+                    <RadioButton x:Name="TabBtnAllowlist"
+                                 GroupName="SettingsNavTabs"
+                                 Content="Cartelle Autorizzate (Allowlist)"
+                                 Style="{StaticResource TabNavButtonStyle}"
+                                 Checked="OnTabSelectionChanged"
+                                 Click="OnTabSelectionChanged"/>
+                    <RadioButton x:Name="TabBtnMemory"
+                                 GroupName="SettingsNavTabs"
+                                 Content="Memoria Agente"
+                                 Style="{StaticResource TabNavButtonStyle}"
+                                 Checked="OnTabSelectionChanged"
+                                 Click="OnTabSelectionChanged"/>
+                    <RadioButton x:Name="TabBtnCloud"
+                                 GroupName="SettingsNavTabs"
+                                 Content="Cloud (Gemini)"
+                                 Style="{StaticResource TabNavButtonStyle}"
+                                 Checked="OnTabSelectionChanged"
+                                 Click="OnTabSelectionChanged"/>
+                </StackPanel>
+            </Border>
+
+            <!-- 3. TAB CONTENTS -->
+            <Grid Grid.Row="2" Margin="18,16">
+
+                <!-- PANEL 1: MODELLO & HARDWARE -->
+                <ScrollViewer x:Name="PanelGeneral" VerticalScrollBarVisibility="Auto" Visibility="Visible">
+                    <StackPanel Margin="0,0,6,0">
+                        <!-- Model Profile Selection -->
+                        <TextBlock Text="PROFILO MODELLO LOCALE" FontSize="11" FontWeight="Bold" Foreground="#60A5FA" Margin="0,0,0,6"/>
+                        <ComboBox x:Name="ComboModelProfile"
+                                  Background="#232630"
+                                  Foreground="#F3F4F6"
+                                  BorderBrush="#3B4052"
+                                  Padding="8,6"
+                                  SelectionChanged="OnModelProfileSelectionChanged"
+                                  Margin="0,0,0,8">
+                            <ComboBoxItem Content="Qwen2.5-Coder 1.5B (Specialista Tool Calling &amp; File System, ~1.4 GB RAM)" Tag="Coder15B"/>
+                            <ComboBoxItem Content="Qwen2.5 3B Instruct (Specialista Web Research &amp; Reasoning, ~2.6 GB RAM)" Tag="Qwen3B"/>
+                            <ComboBoxItem Content="Gemma-2 2B Instruct (Specialista Sintesi &amp; Logica Concettuale, ~1.6 GB RAM)" Tag="Gemma2B"/>
+                            <ComboBoxItem Content="Spark-X 2.5 1.7B (Generale &amp; Batteria, ~1.2 GB RAM)" Tag="1.7B"/>
+                            <ComboBoxItem Content="Modello GGUF Personalizzato..." Tag="Custom"/>
+                        </ComboBox>
+
+                        <!-- Model Info Card & Recommended Defaults -->
+                        <Border x:Name="CardModelInfo"
+                                Background="#1A1C24"
+                                BorderBrush="#2D313F"
+                                BorderThickness="1"
+                                CornerRadius="8"
+                                Padding="12,10"
+                                Margin="0,0,0,10">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Border x:Name="BadgeModelStatus"
+                                                Background="#064E3B"
+                                                BorderBrush="#059669"
+                                                BorderThickness="1"
+                                                CornerRadius="4"
+                                                Padding="6,2">
+                                            <TextBlock x:Name="TxtModelStatus"
+                                                       Text="✓ Scaricato e verificato"
+                                                       FontSize="10"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="#34D399"/>
+                                        </Border>
+                                        <TextBlock x:Name="TxtModelFileSize"
+                                                   Text=" · 1.04 GB"
+                                                   FontSize="11"
+                                                   Foreground="#9CA3AF"
+                                                   VerticalAlignment="Center"
+                                                   Margin="4,0,0,0"/>
+                                    </StackPanel>
+
+                                    <Button Grid.Column="1"
+                                            x:Name="BtnApplyRecommendedPreset"
+                                            Content="⚡ Applica consigliati"
+                                            Style="{StaticResource SecondaryButtonStyle}"
+                                            Padding="8,3"
+                                            FontSize="11"
+                                            Foreground="#60A5FA"
+                                            BorderBrush="#2563EB"
+                                            Cursor="Hand"
+                                            ToolTip="Applica automaticamente thread, contesto e timeout consigliati per questo modello su Ryzen 3700U"
+                                            Click="OnApplyRecommendedPresetClicked"/>
+                                </Grid>
+
+                                <TextBlock x:Name="TxtModelSpecialization"
+                                           Text="Specialista per operazioni su File System, scripting, chiamate tool e comandi desktop."
+                                           FontSize="11"
+                                           Foreground="#D1D5DB"
+                                           TextWrapping="Wrap"
+                                           Margin="0,0,0,4"/>
+
+                                <TextBlock x:Name="TxtModelRecommendedParams"
+                                           Text="Stima: ~1.7 GB RAM · Velocità: ~23.5 tok/s · Suggeriti: 6 thread CPU, 4096 ctx, timeout 120s"
+                                           FontSize="10"
+                                           Foreground="#60A5FA"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <CheckBox x:Name="ChkAutoApplyPreset"
+                                  Content="Adatta automaticamente contesto e timeout quando cambio modello"
+                                  Foreground="#9CA3AF"
+                                  FontSize="11"
+                                  Margin="0,0,0,8"
+                                  IsChecked="True"/>
+
+                        <!-- Custom Model Path -->
+                        <TextBlock Text="Percorso file modello GGUF:" FontSize="11" Foreground="#9CA3AF" Margin="0,4,0,3"/>
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="TxtModelPath"
+                                     Background="#232630"
+                                     Foreground="#E5E7EB"
+                                     BorderBrush="#3B4052"
+                                     Padding="8,5"
+                                     FontSize="12"/>
+                            <Button Grid.Column="1"
+                                    Content="Sfoglia..."
+                                    Style="{StaticResource SecondaryButtonStyle}"
+                                    Margin="8,0,0,0"
+                                    Click="OnBrowseModelPathClicked"/>
+                        </Grid>
+
+                        <Separator Background="#2A2D3A" Margin="0,4,0,14"/>
+
+                        <!-- Hardware Auto-Profiling & Detection Card -->
+                        <Border Background="#161822" BorderBrush="#2A2F42" BorderThickness="1" CornerRadius="8" Padding="12,10" Margin="0,0,0,14">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="💻 PROFILAZIONE HARDWARE SISTEMA" FontSize="11" FontWeight="Bold" Foreground="#38BDF8"/>
+                                        <Border x:Name="BadgeHardwareTier" Background="#1E293B" CornerRadius="4" Padding="6,2" Margin="8,0,0,0">
+                                            <TextBlock x:Name="TxtHardwareTier" Text="In rilevamento..." FontSize="10" FontWeight="SemiBold" Foreground="#38BDF8"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <Button Grid.Column="1"
+                                            x:Name="BtnAutoTuneHardware"
+                                            Content="⚡ Rileva e Ottimizza Ora"
+                                            Style="{StaticResource SecondaryButtonStyle}"
+                                            Padding="10,4"
+                                            FontSize="11"
+                                            Foreground="#38BDF8"
+                                            BorderBrush="#0284C7"
+                                            Cursor="Hand"
+                                            ToolTip="Rileva CPU, RAM e GPU e applica automaticamente la configurazione migliore"
+                                            Click="OnAutoTuneHardwareClicked"/>
+                                </Grid>
+
+                                <Grid Margin="0,2,0,6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,6,0">
+                                        <TextBlock x:Name="TxtHwCpu" Text="CPU: In rilevamento..." FontSize="10" Foreground="#9CA3AF" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock x:Name="TxtHwRam" Text="RAM: In rilevamento..." FontSize="10" Foreground="#9CA3AF" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="6,0,0,0">
+                                        <TextBlock x:Name="TxtHwGpu" Text="GPU: In rilevamento..." FontSize="10" Foreground="#9CA3AF" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock x:Name="TxtHwProfileStatus" Text="Profilo: In attesa" FontSize="10" Foreground="#34D399" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <CheckBox x:Name="ChkAutoTuneOnStartup"
+                                          Content="Rileva e ottimizza automaticamente i parametri all'avvio dell'applicazione"
+                                          Foreground="#D1D5DB"
+                                          FontSize="11"
+                                          Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Hardware & Runtime parameters -->
+                        <TextBlock Text="PARAMETRI RUNTIME &amp; INFERENZA" FontSize="11" FontWeight="Bold" Foreground="#60A5FA" Margin="0,0,0,8"/>
+
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- CPU Threads -->
+                            <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                                <TextBlock Text="Thread CPU (Default: 6):" FontSize="11" Foreground="#9CA3AF" Margin="0,0,0,4"/>
+                                <ComboBox x:Name="ComboCpuThreads" Background="#232630" Foreground="#F3F4F6" BorderBrush="#3B4052" Padding="8,5">
+                                    <ComboBoxItem Content="2 thread"/>
+                                    <ComboBoxItem Content="4 thread"/>
+                                    <ComboBoxItem Content="6 thread (Consigliato)" IsSelected="True"/>
+                                    <ComboBoxItem Content="8 thread"/>
+                                    <ComboBoxItem Content="12 thread"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <!-- Context Size -->
+                            <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                                <TextBlock Text="Dimensione Contesto (KV Cache):" FontSize="11" Foreground="#9CA3AF" Margin="0,0,0,4"/>
+                                <ComboBox x:Name="ComboContextSize" Background="#232630" Foreground="#F3F4F6" BorderBrush="#3B4052" Padding="8,5">
+                                    <ComboBoxItem Content="2048 token"/>
+                                    <ComboBoxItem Content="4096 token (Consigliato)" IsSelected="True"/>
+                                    <ComboBoxItem Content="8192 token"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Hardware Acceleration & Execution Timeout -->
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- Acceleration Device -->
+                            <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                                <TextBlock Text="Accelerazione Hardware:" FontSize="11" Foreground="#9CA3AF" Margin="0,0,0,4"/>
+                                <ComboBox x:Name="ComboDevice" Background="#232630" Foreground="#F3F4F6" BorderBrush="#3B4052" Padding="8,5">
+                                    <ComboBoxItem Content="CPU (Predefinita / Nessuna)" Tag="none" IsSelected="True"/>
+                                    <ComboBoxItem Content="Vulkan (GPU AMD/Intel/NVIDIA)" Tag="Vulkan0"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <!-- Per-Step Timeout -->
+                            <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                                <TextBlock Text="Timeout per Passaggio:" FontSize="11" Foreground="#9CA3AF" Margin="0,0,0,4"/>
+                                <ComboBox x:Name="ComboExecutionTimeout" Background="#232630" Foreground="#F3F4F6" BorderBrush="#3B4052" Padding="8,5">
+                                    <ComboBoxItem Content="90 secondi" Tag="90"/>
+                                    <ComboBoxItem Content="120 secondi" Tag="120"/>
+                                    <ComboBoxItem Content="180 secondi (Consigliato)" Tag="180" IsSelected="True"/>
+                                    <ComboBoxItem Content="240 secondi" Tag="240"/>
+                                    <ComboBoxItem Content="300 secondi (5 min)" Tag="300"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Local Server Port -->
+                        <Grid Margin="0,0,0,14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                                <TextBlock Text="Porta HTTP Locale:" FontSize="11" Foreground="#9CA3AF" Margin="0,0,0,4"/>
+                                <TextBox x:Name="TxtServerPort" Text="8080" Background="#232630" Foreground="#E5E7EB" BorderBrush="#3B4052" Padding="8,5"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                                <TextBlock Text="Indirizzo Host:" FontSize="11" Foreground="#9CA3AF" Margin="0,0,0,4"/>
+                                <TextBox x:Name="TxtServerHost" Text="127.0.0.1" Background="#232630" Foreground="#E5E7EB" BorderBrush="#3B4052" Padding="8,5"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Separator Background="#2A2D3A" Margin="0,4,0,14"/>
+
+                        <!-- Windows Integration -->
+                        <TextBlock Text="INTEGRAZIONE WINDOWS" FontSize="11" FontWeight="Bold" Foreground="#60A5FA" Margin="0,0,0,8"/>
+                        <CheckBox x:Name="ChkStartWithWindows"
+                                  Content="Avvia automaticamente all'accesso di Windows"
+                                  Foreground="#E5E7EB"
+                                  FontSize="12"
+                                  Margin="0,0,0,6"/>
+                        <CheckBox x:Name="ChkStartMinimized"
+                                  Content="Avvia ridotto a icona nella barra delle applicazioni (System Tray)"
+                                  Foreground="#E5E7EB"
+                                  FontSize="12"
+                                  Margin="0,0,0,6"/>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- PANEL 2: ALLOWLIST DIRECTORIES -->
+                <Grid x:Name="PanelAllowlist" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                        <TextBlock Text="SANDBOX DI SICUREZZA FILESYSTEM" FontSize="11" FontWeight="Bold" Foreground="#60A5FA" Margin="0,0,0,4"/>
+                        <TextBlock Text="L'agente può operare esclusivamente nelle cartelle sottostanti. I tentativi di accesso a file di sistema (es. Windows, Program Files, AppData) sono bloccati tassativamente."
+                                   FontSize="11" Foreground="#9CA3AF" TextWrapping="Wrap" LineHeight="16"/>
+                    </StackPanel>
+
+                    <!-- Allowed Paths List -->
+                    <Border Grid.Row="1" Background="#1D202A" BorderBrush="#2F3342" BorderThickness="1" CornerRadius="8" Padding="4">
+                        <ListBox x:Name="ListAllowedPaths"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 Foreground="#F3F4F6"
+                                 SelectionMode="Single">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="4,3">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="📁" FontSize="14" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Path}" FontSize="12" Foreground="#F3F4F6" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                        <Border Grid.Column="2"
+                                                Background="{Binding BadgeBackground}"
+                                                CornerRadius="4"
+                                                Padding="6,1"
+                                                Margin="6,0,0,0">
+                                            <TextBlock Text="{Binding BadgeText}" FontSize="10" Foreground="{Binding BadgeForeground}"/>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+
+                    <!-- Allowlist Toolbar -->
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                        <Button Content="➕ Aggiungi Cartella..."
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Margin="0,0,8,0"
+                                Click="OnAddAllowedFolderClicked"/>
+                        <Button x:Name="BtnRemoveAllowedFolder"
+                                Content="🗑️ Rimuovi"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Margin="0,0,8,0"
+                                Click="OnRemoveAllowedFolderClicked"/>
+                        <Button Content="🔄 Ripristina Predefinite"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="OnResetDefaultAllowedFoldersClicked"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- PANEL 3: USER MEMORY -->
+                <Grid x:Name="PanelMemory" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                        <TextBlock Text="MEMORIA ESPLICITA DELL'AGENTE (user_memory)" FontSize="11" FontWeight="Bold" Foreground="#60A5FA" Margin="0,0,0,4"/>
+                        <TextBlock Text="Queste informazioni vengono conservate in modo persistente in SQLite e iniettate nel System Prompt dell'agente all'inizio di ciascuna conversazione."
+                                   FontSize="11" Foreground="#9CA3AF" TextWrapping="Wrap" LineHeight="16"/>
+                    </StackPanel>
+
+                    <!-- Memory List -->
+                    <Border Grid.Row="1" Background="#1D202A" BorderBrush="#2F3342" BorderThickness="1" CornerRadius="8" Padding="4">
+                        <ListBox x:Name="ListUserMemory"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 Foreground="#F3F4F6"
+                                 SelectionMode="Single"
+                                 SelectionChanged="OnMemoryItemSelectionChanged">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="6,4">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="🧠 " FontSize="12"/>
+                                            <TextBlock Text="{Binding Key}" FontWeight="Bold" FontSize="12" Foreground="#60A5FA"/>
+                                            <TextBlock Text="{Binding FormattedDate}" FontSize="10" Foreground="#6B7280" Margin="8,2,0,0"/>
+                                        </StackPanel>
+                                        <TextBlock Grid.Row="1" Text="{Binding Value}" FontSize="11" Foreground="#D1D5DB" TextWrapping="Wrap" Margin="18,2,0,0"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+
+                    <!-- Memory Editor Form -->
+                    <Border Grid.Row="2" Background="#20232E" BorderBrush="#2F3342" BorderThickness="1" CornerRadius="8" Padding="10,8" Margin="0,10,0,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Chiave:" FontSize="11" Foreground="#9CA3AF" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBox x:Name="TxtMemoryKey" Grid.Column="1" Background="#18191E" Foreground="#F3F4F6" BorderBrush="#3B4052" Padding="6,3" FontSize="11"/>
+                            </Grid>
+
+                            <Grid Grid.Row="1" Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Valore:" FontSize="11" Foreground="#9CA3AF" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBox x:Name="TxtMemoryValue" Grid.Column="1" Background="#18191E" Foreground="#F3F4F6" BorderBrush="#3B4052" Padding="6,3" FontSize="11"/>
+                            </Grid>
+
+                            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="💾 Salva / Aggiorna"
+                                        Style="{StaticResource SecondaryButtonStyle}"
+                                        Margin="0,0,6,0"
+                                        Click="OnSaveMemoryClicked"/>
+                                <Button Content="🗑️ Elimina Nota"
+                                        Style="{StaticResource SecondaryButtonStyle}"
+                                        Margin="0,0,6,0"
+                                        Click="OnDeleteMemoryClicked"/>
+                                <Button Content="🧹 Svuota Tutto"
+                                        Style="{StaticResource SecondaryButtonStyle}"
+                                        Click="OnClearAllMemoriesClicked"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- PANEL 4: CLOUD GOOGLE GEMINI -->
+                <ScrollViewer x:Name="PanelCloud" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
+                    <StackPanel Margin="0,0,6,0">
+                        <TextBlock Text="CONFIGURAZIONE GOOGLE GEMINI (FREE TIER)" FontSize="11" FontWeight="Bold" Foreground="#60A5FA" Margin="0,0,0,6"/>
+                        <TextBlock Text="Delega a Google Gemini le richieste ad alta complessità e contesti estesi (1M token), preservando le risorse hardware locali."
+                                   FontSize="11" Foreground="#9CA3AF" TextWrapping="Wrap" Margin="0,0,0,12"/>
+
+                        <!-- API Key Section Card -->
+                        <Border Background="#1A1C24" BorderBrush="#2D313F" BorderThickness="1" CornerRadius="8" Padding="12,12" Margin="0,0,0,14">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="🔑 Chiave API Google AI Studio / Gemini" FontWeight="SemiBold" FontSize="12" Foreground="#F3F4F6"/>
+                                    </StackPanel>
+                                    <Border x:Name="BadgeCloudStatus" Grid.Column="1" Background="#372F14" CornerRadius="4" Padding="8,2">
+                                        <TextBlock x:Name="TxtCloudStatusBadge" Text="Chiave Non Configurata" FontSize="10" Foreground="#FBBF24" FontWeight="SemiBold"/>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Input Box Container with Eye and Paste Buttons -->
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Masked PasswordBox -->
+                                    <PasswordBox x:Name="PwdGeminiApiKey"
+                                                 Grid.Column="0"
+                                                 Background="#232630"
+                                                 Foreground="#F3F4F6"
+                                                 BorderBrush="#3B4052"
+                                                 Padding="10,7"
+                                                 FontSize="12"
+                                                 PasswordChanged="OnGeminiApiKeyPasswordChanged"/>
+
+                                    <!-- Unmasked TextBox (toggleable) -->
+                                    <TextBox x:Name="TxtGeminiApiKeyVisible"
+                                             Grid.Column="0"
+                                             Background="#232630"
+                                             Foreground="#F3F4F6"
+                                             BorderBrush="#3B4052"
+                                             Padding="10,7"
+                                             FontSize="12"
+                                             Visibility="Collapsed"
+                                             TextChanged="OnGeminiApiKeyTextChanged"/>
+
+                                    <!-- Placeholder / Watermark -->
+                                    <TextBlock x:Name="TxtApiKeyPlaceholder"
+                                               Grid.Column="0"
+                                               Text="Incolla qui la chiave API (es. AIzaSy...)"
+                                               FontSize="12"
+                                               Foreground="#6B7280"
+                                               IsHitTestVisible="False"
+                                               VerticalAlignment="Center"
+                                               Margin="12,0,0,0"/>
+
+                                    <!-- Toggle Visibility Button (Eye) -->
+                                    <Button x:Name="BtnToggleKeyVisibility"
+                                            Grid.Column="1"
+                                            Content="👁️"
+                                            ToolTip="Mostra / Nascondi testo chiave"
+                                            Style="{StaticResource SecondaryButtonStyle}"
+                                            Margin="6,0,0,0"
+                                            Padding="8,6"
+                                            Click="OnToggleKeyVisibilityClicked"/>
+
+                                    <!-- Paste from Clipboard Button -->
+                                    <Button x:Name="BtnPasteApiKey"
+                                            Grid.Column="2"
+                                            Content="📋 Incolla"
+                                            ToolTip="Incolla dagli Appunti"
+                                            Style="{StaticResource SecondaryButtonStyle}"
+                                            Margin="6,0,0,0"
+                                            Padding="10,6"
+                                            Click="OnPasteApiKeyClicked"/>
+
+                                    <!-- Clear Key Button -->
+                                    <Button x:Name="BtnClearApiKey"
+                                            Grid.Column="3"
+                                            Content="✕"
+                                            ToolTip="Rimuovi chiave API"
+                                            Style="{StaticResource SecondaryButtonStyle}"
+                                            Margin="6,0,0,0"
+                                            Padding="8,6"
+                                            Click="OnClearApiKeyClicked"/>
+                                </Grid>
+
+                                <!-- Action Row: Test Key & Get Free Key Link -->
+                                <Grid Margin="0,0,0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button x:Name="BtnTestCloudConnection"
+                                            Grid.Column="0"
+                                            Content="⚡ Verifica Chiave"
+                                            Style="{StaticResource SecondaryButtonStyle}"
+                                            Padding="10,5"
+                                            Click="OnTestCloudConnectionClicked"/>
+
+                                    <TextBlock x:Name="TxtCloudTestResult"
+                                               Grid.Column="1"
+                                               Text=""
+                                               FontSize="11"
+                                               VerticalAlignment="Center"
+                                               Margin="10,0,10,0"
+                                               TextTrimming="CharacterEllipsis"/>
+
+                                    <Button Grid.Column="2"
+                                            Content="🌐 Ottieni Chiave Gratuita (Google AI Studio)"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Foreground="#60A5FA"
+                                            Cursor="Hand"
+                                            FontSize="11"
+                                            Padding="4,2"
+                                            Click="OnOpenAiStudioLinkClicked"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Model Selection -->
+                        <TextBlock Text="MODELLO CLOUD PRIMARIO" FontSize="11" FontWeight="Bold" Foreground="#60A5FA" Margin="0,0,0,6"/>
+                        <ComboBox x:Name="ComboCloudModel"
+                                  Background="#232630"
+                                  Foreground="#F3F4F6"
+                                  BorderBrush="#3B4052"
+                                  Padding="8,6"
+                                  Margin="0,0,0,12">
+                            <ComboBoxItem Content="Gemini 3.8 Flash (Consigliato per Agenti Autonomi &amp; Coding)" Tag="gemini-3.8-flash" IsSelected="True"/>
+                            <ComboBoxItem Content="Gemini 3.5 Flash-Lite (Ultra-veloce, consumo minimo token)" Tag="gemini-3.5-flash-lite"/>
+                        </ComboBox>
+
+                        <!-- Options & Privacy Rules -->
+                        <TextBlock Text="POLICY DI ESCALATION &amp; PRIVACY" FontSize="11" FontWeight="Bold" Foreground="#60A5FA" Margin="0,0,0,6"/>
+
+                        <CheckBox x:Name="ChkAutoCloudComplexity"
+                                  Content="Instrada richieste complesse al Cloud (conferma preventiva richiesta)"
+                                  Foreground="#F3F4F6"
+                                  FontSize="11"
+                                  Margin="0,0,0,8"
+                                  IsChecked="True"/>
+
+                        <CheckBox x:Name="ChkEnableCloudEscalation"
+                                  Content="Proponi passaggio al Cloud dopo 2 tentativi falliti dal modello locale"
+                                  Foreground="#F3F4F6"
+                                  FontSize="11"
+                                  Margin="0,0,0,12"
+                                  IsChecked="True"/>
+
+                        <Border Background="#1E2330" BorderBrush="#3B4052" BorderThickness="1" CornerRadius="6" Padding="12,10" Margin="0,0,0,12">
+                            <StackPanel>
+                                <TextBlock Text="🔒 Garanzia Privacy &amp; Fallback Resiliente" FontWeight="SemiBold" FontSize="11" Foreground="#93C5FD" Margin="0,0,0,4"/>
+                                <TextBlock Text="• Privacy-First: OpenAgent chiederà sempre il tuo consenso esplicito prima di inviare dati al Cloud." FontSize="10" Foreground="#9CA3AF" TextWrapping="Wrap" Margin="0,0,0,3"/>
+                                <TextBlock Text="• Fallback automatico: se Gemini 3.8 Flash incontra errori di quota o sovraccarico, OpenAgent passerà automaticamente a Gemini 3.5 Flash-Lite." FontSize="10" Foreground="#9CA3AF" TextWrapping="Wrap" Margin="0,0,0,3"/>
+                                <TextBlock Text="• Archiviazione locale sicura: la chiave API è salvata esclusivamente nel database locale SQLite (data/agent.db) sul tuo computer." FontSize="10" Foreground="#9CA3AF" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <!-- 4. BOTTOM ACTION BAR -->
+            <Border Grid.Row="3" Background="#1B1D25" BorderBrush="#2A2D3A" BorderThickness="0,1,0,0" Padding="16,12" CornerRadius="0,0,11,11">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock x:Name="TxtRestartNotice"
+                               Text="ℹ️ Alcune modifiche al modello richiederanno il riavvio del server locale."
+                               FontSize="11"
+                               Foreground="#9CA3AF"
+                               VerticalAlignment="Center"/>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Button Content="Annulla"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Margin="0,0,8,0"
+                                Click="OnCancelClicked"/>
+                        <Button Content="Salva e Applica"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Click="OnSaveAndApplyClicked"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
